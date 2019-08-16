@@ -79,8 +79,24 @@ function userIn(arrBoard, userNum){
 }
 function checkWin(arrBoard){
 
-    p1win = true;
-    p2win = true;
+    let p1win = true;
+    let p2win = true;
+    let draw = true;
+
+loop_i:
+    for(let i = 0; i < arrBoard.length;i++){
+    loop_j:
+        for(let j = 0; j < arrBoard[i].length;j++){
+            if(arrBoard[i][j] === "+"){
+                draw = false;
+                break loop_i;
+            }
+        }
+    } 
+
+    if(draw){
+        return 3;
+    }
 
 
     //diagonal check = \
@@ -224,11 +240,16 @@ function checkWin(arrBoard){
 }
 function resetGame(arrBoard, win, start, replay, userNum){
 
-    if(win === 1 || win === 2){
-        print("Player " + win + " wins! Play again? (y/n)");
+    if(win === 1 || win === 2 || win === 3){
+        if(win === 3){
+            print("Draw! Play again? (y/n)")
+        }
+        else{
+            print("Player " + win + " wins! Play again? (y/n)");
+        }
         replay = readline();
         arrBoard = arrBoard.map((thing) =>{ //re-initializes the board for a new game, thing acts as an iterator for the array of arrays and returns a new array for each element 
-            for(let i = 0; i < 3; i++){//for initializes each array in element "thing"
+            for(let i = 0; i < 3; i++){//for initializes each element in array "thing"
                 if(thing[i] != "+"){
                     thing[i] = "+"
                 }
